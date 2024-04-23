@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.11.6)  23 APR 2024 15:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.11.6)  23 APR 2024 15:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -868,13 +868,13 @@ L3 programming layer <2020/03/25>
 Here is how much of TeX's memory you used:
  30219 strings out of 474592
  604770 string characters out of 5745799
- 1936533 words of memory out of 5000000
+ 1938533 words of memory out of 5000000
  51910 multiletter control sequences out of 15000+600000
  585740 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,19n,107p,10987b,458s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmro12.pfb><C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb>
-Output written on individual.pdf (1 page, 93438 bytes).
+Output written on individual.pdf (1 page, 94390 bytes).
 PDF statistics:
  37 PDF objects out of 1000 (max. 8388607)
  3 named destinations out of 1000 (max. 500000)
