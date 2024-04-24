@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.11.6)  23 APR 2024 14:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.11.6)  24 APR 2024 09:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -828,33 +828,33 @@ LaTeX Font Info:    Trying to load font information for T1+lmss on input line 11
 (C:\Users\julia\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 34.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 38.
  (C:\Users\julia\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 34.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 38.
  (C:\Users\julia\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 34.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 38.
  (C:\Users\julia\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 34.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 38.
  (C:\Users\julia\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 34.
+(Font)              <12> on input line 38.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 34.
+(Font)              <8> on input line 38.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 34.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 34.
+(Font)              <6> on input line 38.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 38.
  (C:\Users\julia\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 34.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 38.
  (C:\Users\julia\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1{C:/Users/julia/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}
@@ -868,13 +868,13 @@ L3 programming layer <2020/03/25>
 Here is how much of TeX's memory you used:
  30223 strings out of 474592
  604668 string characters out of 5745799
- 1939533 words of memory out of 5000000
+ 1940533 words of memory out of 5000000
  51912 multiletter control sequences out of 15000+600000
  585740 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,19n,107p,10978b,458s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmro12.pfb><C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb>
-Output written on 1.pdf (1 page, 89776 bytes).
+Output written on 1.pdf (1 page, 89780 bytes).
 PDF statistics:
  34 PDF objects out of 1000 (max. 8388607)
  6 named destinations out of 1000 (max. 500000)
