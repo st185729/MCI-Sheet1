@@ -45,12 +45,42 @@
     \item[\theenumi.1)] \, \\
         \begin{tabular}{c c c}
             Tag & Julia & Salome\\ \hline
-            Mittwoch & & \\ \hline
-            Donnerstag & & \\ \hline
-            Freitag & & \\ \hline
-            Samstag & & \\ \hline
-            Sonntag & & \\ \hline
+            Mittwoch & 390 Min & 600 Min\\ \hline
+            Donnerstag & 720 Min & 630 Min\\ \hline
+            Freitag & 0 Min & 390 Min\\ \hline
+            Samstag & 0 Min & 30 Min\\ \hline
+            Sonntag & 0 Min & 330 Min\\ \hline
         \end{tabular}
+    \item[\theenumi.2)] Durchschnitt Julia: 222 Min\\
+                        Durchschnitt Salome: 396 Min
+    \item[\theenumi.3)] \, \\
+        \begin{tabular}{c | c c}
+            & Julia & Salome\\ \hline
+            Durchschnitt & 222 Min& 396 Min\\\hline
+            Standardabweichung & 291.232 Min & 277.013 Min \\\hline
+            Median & 0 Min & 390 Min
+        \end{tabular}
+    \item[\theenumi.4)] \, \\
+
+    \begin{tikzpicture}
+    \begin{axis}[
+        width  = 0.85*\textwidth,
+        height = 8cm,
+        major x tick style = transparent,
+        ybar,
+        bar width=14pt,
+        ymajorgrids = true,
+        ylabel = {Zeitaufwand},
+        symbolic x coords={Mi, Do, Fr, Sa, So},
+        xtick = data,
+        scaled y ticks = false,
+    ]
+      \addplot [ybar, fill = orange] coordinates {(Mi, 390)(Do, 720) (Fr, 0) (Sa, 0) (So, 0)};
+      \addplot [ybar, fill = blue] coordinates {(Mi, 600)(Do, 630)(Fr, 390)(Sa, 30)(So, 330)};
+
+      \legend{Julia, Salome}
+      \end{axis}
+    \end{tikzpicture}
 \end{itemize}
         
 
