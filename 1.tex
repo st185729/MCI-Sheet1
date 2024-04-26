@@ -1,10 +1,10 @@
 \documentclass[12pt]{scrartcl}
 
-\input{../Packages.tex}
-\input{../FormatAndHeader.tex}
+%\input{../Packages.tex}
+%\input{../FormatAndHeader.tex}
 
-%\input{../Style Template/Packages.tex}
-%\input{../Style Template/FormatAndHeader.tex}
+\input{../Style Template/Packages.tex}
+\input{../Style Template/FormatAndHeader.tex}
 
 \setcounter{sheetnr}{1}
 \setcounter{enumi}{2}
@@ -90,14 +90,16 @@
 \begin{itemize}
     \item[\theenumi.1)] \textbf{Nullhypothese $H_0$:} Die Jahresdurchschnitstemperatur in Deutschland hat sich 
                                                       im Zeitraum von 1991 bis 2022 nicht verändert.\\
-                        \textbf{Durchschnittstemperatur:} \\
-                        \textbf{Standardabweichung:} s \\
-                        \textbf{Stichprobengröße:} n =\\
-                        \textbf{Anzahl Freiheitsgrade:} \\
-                        \textbf{Berechneter t-Wert:} 
-                        \textbf{Kritischer t-Wert:} 2.728\\
-                        Der berechnete t-Wert ist größer als der kritische t-Wert. Das bedeutet, die Nullhypothese wird verworfen und man geht davn aus,
-                        dass die Jahresdurchschnitstemperatur in Deutschland sich verändert hat.
+                        \textbf{Durchschnittstemperatur (1961 bis 1990):} $\mu$ = 8.2 °C\\
+                        \textbf{Durchschnittstemperatur (Stichprobe):} $\overline{x}$ = 9.3375 °C\\
+                        \textbf{Standardabweichung:} s $\approx$ 0,73218 °C\\
+                        \textbf{Stichprobengröße:} n = 32\\
+                        \textbf{Anzahl Freiheitsgrade:} df = 31\\
+                        \textbf{Berechneter t-Wert:} \\\\
+                        $t = \dfrac{\overline{x}-\mu}{\dfrac{s}{\sqrt{n}}} = \dfrac{9.3375-8.2}{\dfrac{0.73218}{\sqrt{32}}} \approx 8.78837$\\\\
+                        \textbf{Kritischer t-Wert:} 2.738\\
+                        Der berechnete t-Wert ist größer als der kritische t-Wert. Das bedeutet, die Nullhypothese wird verworfen und man geht davon aus,
+                        dass die Jahresdurchschnitstemperatur in Deutschland sich von 1991 bis 2022 verändert hat.
                         
 	\item[\theenumi.2)] \textbf{Nullhypothese $H_0$:} Die deutsche Jahresdurchschnitstemperatur ist gleich hoch wie die globale Jahresdurchschnittstemperatur.\\
 	Für die globalen Werte gilt:
