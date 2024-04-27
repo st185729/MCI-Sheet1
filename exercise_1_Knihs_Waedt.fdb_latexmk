@@ -1,9 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1714219000 "c:/Users/julia/OneDrive/Dokumente/Uni Dateien/4. Semester/MCI/Übung/MCI-Sheet1/1.tex" "1.pdf" "1" 1714219007 0
+["pdflatex"] 1714219163 "c:/Users/julia/OneDrive/Dokumente/Uni Dateien/4. Semester/MCI/Übung/MCI-Sheet1/exercise_1_Knihs_Waedt.tex" "exercise_1_Knihs_Waedt.pdf" "exercise_1_Knihs_Waedt" 1714219169 0
   "../Style Template/FormatAndHeader.tex" 1714218841 1650 9419815718c66888735700f4430f093e ""
   "../Style Template/Packages.tex" 1713949723 1128 63a67ea95d69405d6578598456a5f8ed ""
-  "1.aux" 1714219006 366 84e618970f402eda67d68c786816d10d "pdflatex"
-  "1.tex" 1714218997 6232 e79c8315084157ca65767aac37d1fd28 ""
   "C:/Users/julia/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1714129735 81081 5218c95adff70368f63716559e94bcbd ""
   "C:/Users/julia/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1699278569 24212834 e162db62fe8aae530daf3b14cacb5188 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -250,9 +248,11 @@
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1656236890 56148 51a9a8571c07b9921892ae11063ae853 ""
   "C:/Users/julia/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
-  "c:/Users/julia/OneDrive/Dokumente/Uni Dateien/4. Semester/MCI/Übung/MCI-Sheet1/1.tex" 1714218997 6232 e79c8315084157ca65767aac37d1fd28 ""
+  "c:/Users/julia/OneDrive/Dokumente/Uni Dateien/4. Semester/MCI/Übung/MCI-Sheet1/exercise_1_Knihs_Waedt.tex" 1714218997 6232 e79c8315084157ca65767aac37d1fd28 ""
+  "exercise_1_Knihs_Waedt.aux" 1714219169 366 84e618970f402eda67d68c786816d10d "pdflatex"
+  "exercise_1_Knihs_Waedt.tex" 1714218997 6232 e79c8315084157ca65767aac37d1fd28 ""
   (generated)
-  "1.aux"
-  "1.log"
-  "1.pdf"
+  "exercise_1_Knihs_Waedt.aux"
+  "exercise_1_Knihs_Waedt.log"
+  "exercise_1_Knihs_Waedt.pdf"
   (rewritten before read)
