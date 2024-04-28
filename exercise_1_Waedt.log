@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.11.1)  28 APR 2024 20:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.11.1)  28 APR 2024 20:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/wobzi/OneDrive/Dokumente/Uni Dateien/4. Semester/MCI/Übung/Abgaben/MCI-Sheet1/individual.tex"
-(c:/Users/wobzi/OneDrive/Dokumente/Uni Dateien/4. Semester/MCI/Übung/Abgaben/MCI-Sheet1/individual.tex
+**"c:/Users/wobzi/OneDrive/Dokumente/Uni Dateien/4. Semester/MCI/Übung/Abgaben/MCI-Sheet1/exercise_1_Waedt.tex"
+(c:/Users/wobzi/OneDrive/Dokumente/Uni Dateien/4. Semester/MCI/Übung/Abgaben/MCI-Sheet1/exercise_1_Waedt.tex
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-10-23>
 (C:\Users\wobzi\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrartcl.cls
@@ -785,8 +785,8 @@ File: pgflibraryplotmarks.code.tex 2023-01-15 v3.1.10 (3.1.10)
 LaTeX Font Info:    Trying to load font information for T1+lmr on input line 9.
  (C:\Users\wobzi\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) (individual.aux)
-\openout1 = `individual.aux'.
+) (exercise_1_Waedt.aux)
+\openout1 = `exercise_1_Waedt.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
 LaTeX Font Info:    ... okay on input line 9.
@@ -901,7 +901,7 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 14.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1{C:/Users/wobzi/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/wobzi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}
 
-{C:/Users/wobzi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}] (individual.aux)
+{C:/Users/wobzi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}] (exercise_1_Waedt.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2020/03/25>
@@ -909,14 +909,14 @@ L3 programming layer <2020/03/25>
  ) 
 Here is how much of TeX's memory you used:
  40129 strings out of 474717
- 943346 string characters out of 5748436
+ 943424 string characters out of 5748436
  1941036 words of memory out of 5000000
  61562 multiletter control sequences out of 15000+600000
  585740 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,19n,107p,10995b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,19n,107p,11001b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/wobzi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/wobzi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmro12.pfb><C:/Users/wobzi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/wobzi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb>
-Output written on individual.pdf (1 page, 97411 bytes).
+Output written on exercise_1_Waedt.pdf (1 page, 97411 bytes).
 PDF statistics:
  38 PDF objects out of 1000 (max. 8388607)
  4 named destinations out of 1000 (max. 500000)

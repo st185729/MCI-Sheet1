@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1714330648 "c:/Users/wobzi/OneDrive/Dokumente/Uni Dateien/4. Semester/MCI/Übung/Abgaben/MCI-Sheet1/individual.tex" "individual.pdf" "individual" 1714330650 0
+["pdflatex"] 1714330684 "c:/Users/wobzi/OneDrive/Dokumente/Uni Dateien/4. Semester/MCI/Übung/Abgaben/MCI-Sheet1/exercise_1_Waedt.tex" "exercise_1_Waedt.pdf" "exercise_1_Waedt" 1714330687 0
   "C:/Users/wobzi/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1714059534 82679 aa65277d28fb037f188cb9c01311ff91 ""
   "C:/Users/wobzi/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1698868418 24203757 f8bf4dc5a26cccfc81c011f5a305b96e ""
   "C:/Users/wobzi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -237,11 +237,11 @@
   "C:/Users/wobzi/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
   "Style Template/FormatAndHeaderIndividual.tex" 1714330647 1563 2b4671a59201141a8f785e97cbdfc786 ""
   "Style Template/Packages.tex" 1714329185 1128 63a67ea95d69405d6578598456a5f8ed ""
-  "c:/Users/wobzi/OneDrive/Dokumente/Uni Dateien/4. Semester/MCI/Übung/Abgaben/MCI-Sheet1/individual.tex" 1714330362 2980 deef6dd8f1dd458d5aab3551080cc6d1 ""
-  "individual.aux" 1714330650 366 c15aaf53b0696772a4c0d976f620de36 "pdflatex"
-  "individual.tex" 1714330362 2980 deef6dd8f1dd458d5aab3551080cc6d1 ""
+  "c:/Users/wobzi/OneDrive/Dokumente/Uni Dateien/4. Semester/MCI/Übung/Abgaben/MCI-Sheet1/exercise_1_Waedt.tex" 1714330362 2980 deef6dd8f1dd458d5aab3551080cc6d1 ""
+  "exercise_1_Waedt.aux" 1714330686 366 c15aaf53b0696772a4c0d976f620de36 "pdflatex"
+  "exercise_1_Waedt.tex" 1714330362 2980 deef6dd8f1dd458d5aab3551080cc6d1 ""
   (generated)
-  "individual.aux"
-  "individual.log"
-  "individual.pdf"
+  "exercise_1_Waedt.aux"
+  "exercise_1_Waedt.log"
+  "exercise_1_Waedt.pdf"
   (rewritten before read)
