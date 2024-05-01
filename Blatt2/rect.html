@@ -1,0 +1,74 @@
+<html>
+    <style>
+#stimulus {
+      --div-width: 100px;
+      height:100px;
+
+      position: absolute;
+      background-color: rgb(255, 255, 255);
+      transition: .5s top, .5s right;
+      top: 0;  
+      right: calc(100% - var(--div-width));
+      width: var(--div-width);
+    }
+
+    </style>
+    <body>
+    
+    
+    <div id="stimulus">
+      
+    </div>
+    <script>
+    
+    
+    let colours =["#ffffff","#f2f2ff","#e6e6ff", "#d9d9ff","#ccccff","#bfbfff","#b2b2ff","#a6a6ff","#9999ff"];
+    let box = document.getElementById("stimulus");
+    let i=0;
+
+    document.addEventListener("keydown", () => {
+      swapColour();
+      swap();
+    });
+    
+
+    function swap(){
+    const height = document.documentElement.clientHeight;
+    const width = document.documentElement.clientWidth;
+    const box = document.getElementById("stimulus");
+      let randY = Math.floor((Math.random() * height) + 1); //Verschiebung
+      let randX = Math.floor((Math.random() * width) + 1); //Verschiebung
+      box.style.backgroundColor = "white"; //wird weiß für den Wechsel
+      box.style.top = randY + "px"; //wird verschoben
+      box.style.right = randX + "px"; //wird verschoben
+    }
+
+    
+    const swapColour = async () => {
+    for (i=0; i < colours.length; i++) {  
+        box.style.backgroundColor = colours[i]
+        console.log(colours[i])
+        await sleep(1000)
+        console.log('🦄')
+    }
+            
+            
+            
+            
+        }
+
+
+
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
+
+
+
+
+    </script>
+    </body>
+    
+    
+</html>

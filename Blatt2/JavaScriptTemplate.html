@@ -1,0 +1,149 @@
+<html>
+    <head>
+        <title>Human Capabilities - Reaction test</title>
+        <style>
+body {
+    font-family: sans-serif;
+}
+#stimulus {
+    height: 40px;
+}
+        </style>
+    </head>
+   <body>
+        <h1 id="title">User Study</h1>
+        <h2 id="instruction">Press space to start!</h2>
+        <div id="stimulus"></div>
+        <p id="time"></p>
+        <p id="count"></p>
+        <p id="mean"></p>
+        <p id="sd"></p>
+
+        <script>
+// if true, the experiment is currently active
+let experimentActive = false;
+
+// if true, the stimulus is currently visible and the user should press space
+let stimulusIsVisible = false;
+
+// time at which the stimulus last appeared (in milliseconds, see Date.now())
+let stimulusTimestamp;
+
+// ID of the timeout that is scheduled to make the stimulus appear.
+// Used to cancel tests when the experiment ends.
+let testStimulusTimeout;
+
+// recorded reaction times in milliseconds
+let times = [];
+
+// DOM elements
+let timeElement = document.getElementById('time');
+let countElement = document.getElementById('count');
+let meanElement = document.getElementById('mean');
+let stdDevElement = document.getElementById('sd');
+let instructionElement = document.getElementById('instruction');
+let stimulusElement = document.getElementById('stimulus');
+
+function getMean(data) {
+    let sum = 0;
+    for (let value of data) sum += value;
+    return sum / data.length;
+}
+
+function getStandardDeviation(data) {
+    let mean = getMean(data);
+    let squareSum = 0;
+    for (let value of data) squareSum += (value - mean) ** 2;
+    return Math.sqrt(squareSum / data.length);
+}
+
+function clearResults() {
+    timeElement.textContent = '';
+    countElement.textContent = '';
+    meanElement.textContent = '';
+    stdDevElement.textContent = '';
+}
+
+function showResults() {
+    let meanDeltaTime = getMean(times);
+    let stdDev = getStandardDeviation(times);
+
+    countElement.textContent = 'Count: ' + times.length;
+    meanElement.textContent = 'Mean: ' + Math.round(meanDeltaTime) + ' ms';
+    stdDevElement.textContent = 'SD: ' + Math.round(stdDev) + ' ms';
+}
+
+function setStimulusColor(newColor) {
+    stimulusElement.style.backgroundColor = newColor;
+}
+
+function startTestTrial() {
+    // reset the stimulus
+    setStimulusColor('black');
+    stimulusIsVisible = false;
+
+    // schedule the stimulus to appear after a random amount of time
+    let timeToWaitInSeconds = Math.random() * 4 + 2; // 2 - 6s
+    testStimulusTimeout = setTimeout(showStimulus, timeToWaitInSeconds * 1000);
+}
+
+function showStimulus() {
+    setStimulusColor('red');
+    stimulusIsVisible = true;
+    stimulusTimestamp = Date.now();
+}
+
+function recordStimulusReactionTime() {
+    let deltaTime = Date.now() - stimulusTimestamp;
+    times.push(deltaTime);
+    timeElement.textContent = deltaTime + ' ms';
+}
+
+function startExperiment() {
+    clearResults(); // clear results of any previous tests
+    instructionElement.textContent = "Press space when the color changes! Press 'a' for results!";
+
+    // reset data and start tests
+    times = [];
+    experimentActive = true;
+    startTestTrial();
+}
+
+function stopExperiment() {
+    // cancel any ongoing tests
+    clearTimeout(testStimulusTimeout);
+    stimulusIsVisible = false;
+    experimentActive = false;
+
+    // reset instruction and show results
+    instruction.textContent = 'Press space to start!';
+    showResults();
+}
+
+window.addEventListener('keydown', (event) => {
+    if (event.key === ' ') {
+        // the user pressed the space key
+        if (!experimentActive) {
+            // start the experiment if it wasn't active
+            startExperiment();
+            return;
+        }
+
+        if (stimulusIsVisible) {
+            // record reaction time
+            recordStimulusReactionTime();
+            // start next trial
+            startTestTrial();
+        }
+    } else if (event.key === 'a') {
+        if (experimentActive) {
+            // stop the experiment and show results
+            stopExperiment();
+        }
+    }  else if (event.key === 'b') {
+        // ...
+    }
+});
+      </script>
+   </body>
+</html>
