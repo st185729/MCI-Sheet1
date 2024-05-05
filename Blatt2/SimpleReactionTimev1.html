@@ -43,7 +43,7 @@ let testStimulusTimeout;
 
 // recorded reaction times in milliseconds
 let times = [];
-let colours =["#f2f2ff","#e6e6ff", "#d9d9ff","#ccccff","#bfbfff","#b2b2ff","#a6a6ff","#9999ff"];
+let colours =["rgb(255, 255, 255)","rgb(242, 242, 255)","rgb(230, 230, 255)", "rgb(204, 204, 255)","rgb(191, 191, 255)","rgb(178, 178, 255)","rgb(166, 166, 255)","rgb(153, 153, 255)"];
 let countedErrors =0;
 
 // DOM elements
@@ -101,7 +101,6 @@ function startTestTrial() {
 
     // schedule the stimulus to appear after a random amount of time
     let timeToWaitInSeconds = Math.random() * 4 + 2; // 2 - 6s
-    console.log(timeToWaitInSeconds*1000)
     testStimulusTimeout = setTimeout(showStimulus, timeToWaitInSeconds * 1000);
     console.log("did run")
     
@@ -112,44 +111,33 @@ function startTestTrial() {
 
 function showStimulus() {
     stimulusIsVisible = true;
-    console.log("isTrue")
+    //console.log("isTrue")
     stimulusTimestamp = Date.now();
-    swapColour()
-   
-    
-
+    fadeIn()
 }
-const swapColour = async () => {
-    let pushed=false
-    let num =0;
-      
-    while(pushed == false){
-        box.style.backgroundColor = colours[num]
-        document.addEventListener("keydown", () => { //warum zählt das mehrfach
-            pushed = true
-            console.log('pushed')
-            setStimulusColor("white")
-            return
-        })
-        if(pushed == true){
-            recordStimulusReactionTime()
-            break
-            
-        }
-        await sleep(300)
-        console.log('🦄')
-        num++
-    } 
-}        
+     
 
+let intervalID = 0;
+function fadeIn() //Farben einblenden
+		{
+			intervalID=setInterval(show,300);
+		}
 
-
-
-const sleep = (milliseconds) => {
-  return new Promise(resolve => setTimeout(resolve, milliseconds))
-}    
-    
-
+function show() {
+    let box = document.getElementById("stimulus");
+    opacity = window.getComputedStyle(box).getPropertyValue("background-color")
+    //console.log(opacity)
+    index = colours.indexOf(opacity)
+    //console.log(index)
+    if(index < colours.length-1 && stimulusIsVisible==true){
+        box.style.backgroundColor =colours[index+1]
+        //console.log(window.getComputedStyle(box).getPropertyValue("background-color"))
+        //console.log("--------")
+    }
+    else {
+        clearInterval(intervalID);
+    }
+}
 
 
 function placeStimulus(){
@@ -197,21 +185,20 @@ window.addEventListener('keydown', (event) => {
         // the user pressed the space key
         if (!experimentActive) {
             // start the experiment if it wasn't active
-            console.log(1.)
+            //console.log(1.)
             startExperiment();
             return;
         }
 
         if (stimulusIsVisible) {
-            console.log(2.)
             // record reaction time
-            //recordStimulusReactionTime();
+            recordStimulusReactionTime();
             // start next trial
             startTestTrial();
         } 
         else {
             console.log("Error")
-           countedErrors++
+            countedErrors++
         }
     } else if (event.key === 'a') {
         if (experimentActive) {
