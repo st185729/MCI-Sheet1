@@ -11,8 +11,7 @@ body {
 
       position: absolute;
       background-color: coral;
-      transition: .5s top, .5s right;
-      top: 0;  
+      top: 100;  
       right: calc(100% - var(--div-width));
       width: var(--div-width);
 }
@@ -27,6 +26,7 @@ body {
         <p id="mean"></p>
         <p id="sd"></p>
         <p id="error"></p>
+        <p id="correlation"></p>
 
         <script>
 // if true, the experiment is currently active
@@ -44,9 +44,8 @@ let testStimulusTimeout;
 
 // recorded reaction times in milliseconds
 let times = [];
-let didError = [];
-let colours =["#f2f2ff","#e6e6ff", "#d9d9ff","#ccccff","#bfbfff","#b2b2ff","#a6a6ff","#9999ff"];
-
+let colours =["rgb(255, 255, 255)","rgb(242, 242, 255)","rgb(230, 230, 255)", "rgb(204, 204, 255)","rgb(191, 191, 255)","rgb(178, 178, 255)","rgb(166, 166, 255)","rgb(153, 153, 255)"];
+let countedErrors =0;
 
 // DOM elements
 let timeElement = document.getElementById('time');
@@ -56,7 +55,13 @@ let stdDevElement = document.getElementById('sd');
 let instructionElement = document.getElementById('instruction');
 let stimulusElement = document.getElementById('stimulus');
 let errorElement = document.getElementById('error');
-const box = document.getElementById("stimulus");
+let box = document.getElementById("stimulus");
+let cor = document.getElementById("correlation");
+
+let xCoordinates =[]
+let yCoordinates=[]
+const height = document.documentElement.clientHeight;
+const width = document.documentElement.clientWidth;
 
 function getMean(data) {
     let sum = 0;
@@ -71,6 +76,26 @@ function getStandardDeviation(data) {
     return Math.sqrt(squareSum / data.length);
 }
 
+function getCorrelation(){
+    let middleX = width/2;
+    let middleY = height/2;
+    let sum =0;
+    let normsXY = [];
+    let meanTimes = getMean(times)
+    for(let i =0; i < xCoordinates.length-1; i++){
+        valueX = (xCoordinates[i]-middleX)**2;
+        valueY = (yCoordinates[i]-middleY)**2;
+        let norm = Math.sqrt(valueX + valueY); //Abstand zwischen einem Punkt und dem Mittelpunkt
+        normsXY.push(norm)
+    }
+
+    let meanNorm = getMean(normsXY);
+    for(let i =0; i < times.length; i++){
+        sum = sum + ((times[i]-meanTimes)*(normsXY[i]-meanNorm)); //Summe für Korrelation
+    }
+    return sum / (times.length); //Korrelation
+}
+
 
 function clearResults() {
     timeElement.textContent = '';
@@ -78,17 +103,20 @@ function clearResults() {
     meanElement.textContent = '';
     stdDevElement.textContent = '';
     errorElement.textContent = '';
+    cor.textContent = '';
 }
 
 function showResults() {
     let meanDeltaTime = getMean(times);
     let stdDev = getStandardDeviation(times);
-    let amountOfErrors = didError.length;
+    let correlation = getCorrelation();
 
     countElement.textContent = 'Count: ' + times.length;
     meanElement.textContent = 'Mean: ' + Math.round(meanDeltaTime) + ' ms';
     stdDevElement.textContent = 'SD: ' + Math.round(stdDev) + ' ms';
-    errorElement.textContent = 'Errors: ' + Math.round(amountOfErrors);
+    errorElement.textContent = 'Errors: ' + Math.round(countedErrors);
+    cor.textContent = 'Correlation:' + Math.round(correlation);
+    
 }
 
 function setStimulusColor(newColor) {
@@ -103,61 +131,65 @@ function startTestTrial() {
 
     // schedule the stimulus to appear after a random amount of time
     let timeToWaitInSeconds = Math.random() * 4 + 2; // 2 - 6s
-    console.log("time")
-    
-    const testStimulusTimeout= async () => {
-    await sleep(timeToWaitInSeconds * 1000)
-    swapColour
+    testStimulusTimeout = setTimeout(showStimulus, timeToWaitInSeconds * 1000);
     placeStimulus();
-    }
 }
 
 
-//function showStimulus() {}
 
-const swapColour = async () => {
-    setStimulusColor('#ffffff');
+function showStimulus() {
     stimulusIsVisible = true;
-    console.log("isTrue")
     stimulusTimestamp = Date.now();
-    for (i=0; i < colours.length; i++) {  
-        setStimulusColor(colours[i])
-        await sleep(500)
+    fadeIn();
+}
+     
+
+let interval = 0;
+function fadeIn() //Farben einblenden
+		{
+			interval=setInterval(swapColour,200);
+		}
+
+function swapColour() {
+    opacity = window.getComputedStyle(box).getPropertyValue("background-color");
+    index = colours.indexOf(opacity);
+    if(index < colours.length-1 && stimulusIsVisible==true){
+        box.style.backgroundColor =colours[index+1];
+    }
+    else {
+        clearInterval(interval);
     }
 }
-const sleep = (milliseconds) => {
-  return new Promise(resolve => setTimeout(resolve, milliseconds))
-}    
-    
 
 
 
 function placeStimulus(){
-    const height = document.documentElement.clientHeight;
-    const width = document.documentElement.clientWidth;
-    let randY = Math.floor((Math.random() * height) + 1); //Verschiebung
-    let randX = Math.floor((Math.random() * width) + 1); //Verschiebung
     box.style.backgroundColor = "white"; //wird weiß für den Wechsel
-    box.style.top = randY + "px"; //wird verschoben
-    box.style.right = randX + "px"; //wird verschoben    
+    let posY = Math.floor((Math.random() * (height-80)) + 1); //Verschiebung
+    let posX = Math.floor((Math.random() * (width-150)) + 1); //Verschiebung
+    xCoordinates.push(posX);
+    yCoordinates.push(posY);
+    box.style.top = posY + "px"; //wird verschoben
+    box.style.right = posX + "px"; //wird verschoben  
 }
 
 function recordStimulusReactionTime() {
     let deltaTime = Date.now() - stimulusTimestamp;
     times.push(deltaTime);
     timeElement.textContent = deltaTime + ' ms';
+
 }
 
 
 
 function startExperiment() {
     clearResults(); // clear results of any previous tests
-    instructionElement.textContent = "Press space when the color changes! Press 'a' for results!";
+    instructionElement.textContent = "Press space when the color changes!";
 
     // reset data and start tests
     times = [];
     experimentActive = true;
-    didError = [];
+    countedErrors =0;
     startTestTrial();
 }
 
@@ -168,7 +200,7 @@ function stopExperiment() {
     experimentActive = false;
 
     // reset instruction and show results
-    instruction.textContent = 'Press space to start!';
+    instruction.textContent = 'Press space to start! You will get your results after 30 trials';
     showResults();
 }
 
@@ -177,31 +209,28 @@ window.addEventListener('keydown', (event) => {
         // the user pressed the space key
         if (!experimentActive) {
             // start the experiment if it wasn't active
-            console.log(1.)
             startExperiment();
             return;
         }
 
         if (stimulusIsVisible) {
-            console.log(2.)
             // record reaction time
             recordStimulusReactionTime();
             // start next trial
             startTestTrial();
         } 
         else {
-            console.log("Error")
-           didError.push(1);
-           //console.log(didError);
+            countedErrors++
         }
-    } else if (event.key === 'a') {
+    }  
+    if(times.length == 30){
         if (experimentActive) {
             // stop the experiment and show results
+            box.style.bottom;
             stopExperiment();
-        }
-    }  else if (event.key === 'b') {
-        // ...
+        } 
     }
+    
 });
       </script>
    </body>
