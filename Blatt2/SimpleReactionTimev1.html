@@ -200,14 +200,13 @@ window.addEventListener('keydown', (event) => {
             console.log("Error")
             countedErrors++
         }
-    } else if (event.key === 'a') {
+    }  else if(times.length == 30){
         if (experimentActive) {
             // stop the experiment and show results
             stopExperiment();
-        }
-    }  else if (event.key === 'b') {
-        // ...
+        } 
     }
+    
 });
       </script>
    </body>
