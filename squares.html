@@ -1,0 +1,91 @@
+<canvas id="myCanvas" width="1500" height="300"></canvas>
+<p>Played around with javascript to make a fade function for shapes, images etc...<br/>Feel free to comment, I'm learning :)</p>
+
+<script>
+
+function initCanvas() {
+    var ctx = document.getElementById('myCanvas').getContext('2d');
+    var cW = ctx.canvas.width, cH = ctx.canvas.height;
+    var time = 0;
+    var loop = 0;
+    //var noOfLoops = 2;
+    var timeMax = 500;
+    var fTime = 0;
+ 
+     function Fade(){
+     
+         this.render = function(fLength,fMaxAlpha,fIn,fInTime,fOutTime){
+
+             if(fIn == true && fTime < fInTime){
+                 var fAlpha = 0;
+                 ctx.globalAlpha = fAlpha;
+             } 
+             else if(fTime >= fInTime && fTime <= fLength+fInTime){
+                 var fAlpha = fMaxAlpha*(fTime-fInTime)/fLength;
+                 ctx.globalAlpha = fAlpha;
+             } 
+
+             else if( fTime < timeMax) {
+                 var fAlpha = fMaxAlpha;
+                 ctx.globalAlpha = fAlpha;
+             }
+             
+         }
+     }
+      
+     var fade = new Fade();
+     function Rect(rColor){
+       
+     
+             if(rColor == 'red') {
+                     rColor = 'red';
+                 }
+         this.render = function(rX,rY,rW,rH,fLength,fMaxAlpha,fIn,fOut,fInTime,fOutTime){
+             
+                 fade.render(fLength,fMaxAlpha,fIn,fOut,fInTime,fOutTime);
+                 
+                 ctx.fillStyle = rColor;
+                 
+                 ctx.fillRect(stimulusx, stimulusy, 150, 100);
+                 ctx.globalAlpha = 1;
+             }
+             
+     }
+ 
+     function TimeLine(){
+         this.render = function(){
+              time+=1;
+              fTime++;
+         }
+     }
+     var color = 'red';
+     var timeLine = new TimeLine();
+     var rect = new Rect(color);
+     const stimulusx = Math.random()*1400;
+    const stimulusy = Math.random()*500;
+   
+     function animate() {
+ 
+         ctx.save();
+         ctx.clearRect(0, 0, cW, cH);
+         timeLine.render();
+         ctx.fillStyle = '#fff';
+         ctx.fillRect(0, 0, cW, cH);
+ 
+         
+         rect.render(0,0,200,200,500,1,true,false,50,0);
+         
+         
+     }
+     var animateInterval = setInterval(animate, 15);
+ 
+ }
+ window.addEventListener('load', function(event) {
+     initCanvas();
+ });
+
+    
+</script>
+
+</body>
+</html>
