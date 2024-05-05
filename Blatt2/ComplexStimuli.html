@@ -1,0 +1,205 @@
+<html>
+    <head>
+        <title>Human Capabilities - Reaction test</title>
+        <style>
+body {
+    font-family: sans-serif;
+}
+#stimulus {
+    height: 40px;
+}
+        </style>
+    </head>
+   <body>
+        <h1 id="title">User Study</h1>
+        <h2 id="instruction">Press space to start!</h2>
+        <div id="stimulus"></div>
+        <p id="time"></p>
+        <p id="count"></p>
+        <p id="mean"></p>
+        <p id="sd"></p>
+
+        <script>
+
+/* Links der Bilder:
+* https://mystischereisen.de/europa/deutsche-kuche
+*https://berlinpoche.de/typische-deutsche-gerichte
+*http://fity.club/lists/suggestions/currywurst/
+*https://www.chefskarte.de/beliebtesten-chinesischen-gerichte/
+*https://mystischereisen.de/amerika/mexikanisches-essen
+*/
+// if true, the experiment is currently active
+let experimentActive = false;
+
+// if true, the stimulus is currently visible and the user should press space
+let stimulusIsVisible = false;
+
+// time at which the stimulus last appeared (in milliseconds, see Date.now())
+let stimulusTimestamp;
+
+// ID of the timeout that is scheduled to make the stimulus appear.
+// Used to cancel tests when the experiment ends.
+let testStimulusTimeout;
+
+// recorded reaction times in milliseconds
+let times = [];
+
+const images = [{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Konigsberger-Klopse.jpg"},
+{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Wurste.jpg" },
+{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Maultaschen.jpg" },
+{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Schnitzel.jpg" },
+{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Schwarzwalder-Kirschtorte.jpg" },
+{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Spargel.jpg" },
+{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Brezel.jpg" },
+{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Kartoffelknodel.jpg" },
+{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Kartoffelsalat.jpg" },
+{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Sauerbraten.jpg" },
+
+{ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Pekingente-1.jpg"},
+{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Schweinefleisch-s%C3%BC%C3%9Fsauer-1.jpg" },
+{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Mapo-Tofu-4.jpg" },
+{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Gegrillter-Spie%C3%9F-1.jpg" },
+{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/dumplings-4.jpg" },
+{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/hot-pot-1-1.jpg" },
+{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Gong-bao-Huhn-1.jpg" },
+{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/bubble-tea-1-1.jpg" },
+{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Lamian-Nudeln-1.jpg" },
+{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Gebratene-Eier-und-Tomaten-1.jpg"},
+
+{ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Klassische-Guacamole.jpg"},
+{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Siebenschichtiger-Taco-Dip.jpg"},
+{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Chilaquiles.jpg" },
+{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Tamales.jpg" },
+{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Tacos.jpg" },
+{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Pozole.jpg" },
+{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Enchiladas.jpg" },
+{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Fajita-1.jpg" },
+{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Quesadilla.jpg" },
+{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Elote.jpg" }]
+
+
+// DOM elements
+let timeElement = document.getElementById('time');
+let meanElement = document.getElementById('mean');
+let stdDevElement = document.getElementById('sd');
+let instructionElement = document.getElementById('instruction');
+let stimulusElement = document.getElementById('stimulus');
+
+let shuffle = [];
+
+function getShuffledImages(){
+    for(let i=0; i < 30; i++){
+        number = Math.floor(Math.random() * 31);
+        while(images[number] in shuffle){
+            number = Math.floor(Math.random() * 31);
+        }
+        shuffle.push(images[number]);
+    }
+}
+
+function getMean(data) {
+    let sum = 0;
+    for (let value of data) sum += value;
+    return sum / data.length;
+}
+
+function getStandardDeviation(data) {
+    let mean = getMean(data);
+    let squareSum = 0;
+    for (let value of data) squareSum += (value - mean) ** 2;
+    return Math.sqrt(squareSum / data.length);
+}
+
+
+function clearResults() {
+    timeElement.textContent = '';
+    meanElement.textContent = '';
+    stdDevElement.textContent = '';
+}
+
+function showResults() {
+    let meanDeltaTime = getMean(times);
+    let stdDev = getStandardDeviation(times);
+
+    meanElement.textContent = 'Mean: ' + Math.round(meanDeltaTime) + ' ms';
+    stdDevElement.textContent = 'SD: ' + Math.round(stdDev) + ' ms';
+}
+
+
+let index = 0;
+function startTestTrial() {
+    console.log(index);
+    if(index < shuffle.length){
+        let imageElement = document.createElement('picture');
+        imageElement.src = shuffle[index].image;
+        stimulusElement.appendChild(imageElement);
+        index++;
+        stimulusIsVisible = true;
+        stimulusTimestamp = Date.now();
+
+    }
+    else{
+        console.log("Ausgabe Ergebnisse")
+    }
+
+}
+
+function showStimulus() {
+    setStimulusColor('red');
+    stimulusIsVisible = true;
+    stimulusTimestamp = Date.now();
+}
+
+function recordStimulusReactionTime() {
+    let deltaTime = Date.now() - stimulusTimestamp;
+    times.push(deltaTime);
+    timeElement.textContent = deltaTime + ' ms';
+}
+
+function startExperiment() {
+    clearResults(); // clear results of any previous tests
+    instructionElement.textContent = "Press space when the color changes! Press 'a' for results!";
+    getShuffledImages();
+    // reset data and start tests
+    times = [];
+    experimentActive = true;
+    index = 0;
+    startTestTrial();
+}
+
+function stopExperiment() {
+    // cancel any ongoing tests
+    clearTimeout(testStimulusTimeout);
+    stimulusIsVisible = false;
+    experimentActive = false;
+
+    // reset instruction and show results
+    instruction.textContent = 'Press space to start!';
+    showResults();
+}
+
+window.addEventListener('keydown', (event) => {
+    if (event.key === ' ') {
+        // the user pressed the space key
+        if (!experimentActive) {
+            // start the experiment if it wasn't active
+            startExperiment();
+            return;
+        }
+
+        if (stimulusIsVisible) {
+            // record reaction time
+            recordStimulusReactionTime();
+            // start next trial
+            startTestTrial();
+        }
+    } else if (index == 30) {
+        if (experimentActive) {
+            // stop the experiment and show results
+            stopExperiment();
+        }
+    }  
+});
+      </script>
+   </body>
+</html>
