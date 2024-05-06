@@ -38,8 +38,6 @@
 
 <canvas id="myCanvas"></canvas>
 
-
-
 <script>
 
     // if true, the experiment is currently active
@@ -57,27 +55,48 @@
 
     // recorded reaction times in milliseconds
     let times = [];
+    let purpleTimes = [];
+    let orangeTimes = [];
 
-
+    //ID of timeout that schedules the appearance of a new stimulus after a triangle.
+    let newTrialTimeout;
 
     // DOM elements
     let timeElement = document.getElementById('time');
     let countElement = document.getElementById('count');
+
+    //calculated elements
     let meanElement = document.getElementById('mean');
     let stdDevElement = document.getElementById('sd');
+    let meanElementPurple = document.getElementById('mean');
+    let stdDevElementPurple = document.getElementById('sd');
+    let meanElementOrange = document.getElementById('mean');
+    let stdDevElementOrange = document.getElementById('sd');
+
     let instructionElement = document.getElementById('instruction');
-    let ctx = document.getElementById('myCanvas').getContext('2d');
-    let errorsElement = document.getElementById('errors');
+
+
+    //counter
+    let errorsElementTotal = document.getElementById('errorsTotal');
+    let errorsTotal = 0;
+    let errorsElementPurple = document.getElementById('errorsPurple');
+    let errorsPurple = 0;
+    let errorsElementOrange = document.getElementById('errorsOrange');
+    let errorsOrange = 0;
     let trialsCounter = 0;
-    let errors = 0;
+
+    //stimulus properties
     let stimulusx = 0;
     let stimulusy = 0;
-    let squareWidth = 0;
-    let triangleWidth = 0;
+    let stimulusColor = '';
+    let stimuluswidth = 0;
     let stimulusShape = 0;
 
+    //canvas properties
+    let ctx = document.getElementById('myCanvas').getContext('2d');
     ctx.canvas.width  = document.documentElement.clientWidth;
     ctx.canvas.height = document.documentElement.clientHeight;
+
 
     function getMean(data) {
         let sum = 0;
@@ -96,24 +115,45 @@
         timeElement.textContent = '';
         countElement.textContent = '';
         meanElement.textContent = '';
+        meanElementPurple.textContent = '';
+        meanElementOrange.textContent = '';
         stdDevElement.textContent = '';
+        stdDevElementPurple.textContent = '';
+        stdDevElementOrange.textContent = '';
+        errorsElementTotal.textContent = '';
+        errorsElementPurple.textContent = '';
+        errorsElementOrange.textContent = '';
     }
 
     function showResults() {
         let meanDeltaTime = getMean(times);
+        let meanPurpleTime = getMean(purpleTimes);
+        let meanOrangeTimes = getMean(orangeTimes);
         let stdDev = getStandardDeviation(times);
+        let purpleStdDev = getStandardDeviation(purpleTimes);
+        let orangeStdDev = getStandardDeviation(orangeTimes);
 
         countElement.textContent = 'Count: ' + times.length;
-        meanElement.textContent = 'Mean: ' + Math.round(meanDeltaTime) + ' ms';
-        stdDevElement.textContent = 'SD: ' + Math.round(stdDev) + ' ms';
-        errorsElement.textContent = 'Errors:' + errors;
+        meanElement.textContent = 'Total Mean: ' + Math.round(meanDeltaTime) + ' ms';
+        stdDevElement.textContent = 'Total SD: ' + Math.round(stdDev) + ' ms';
+        errorsElementTotal.textContent = 'Total Errors:' + errorsTotal;
+
+        meanElementPurple.textContent = 'Purple Mean: ' + Math.round(meanPurpleTime) + ' ms';
+        stdDevElementPurple.textContent = 'Purple SD: ' + Math.round(purpleStdDev) + ' ms';
+        errorsElementPurple.textContent = 'Purple Errors:' + errorsPurple;
+
+        meanElementOrange.textContent = 'Orange Mean: ' + Math.round(meanOrangeTimes) + ' ms';
+        stdDevElementOrange.textContent = 'Orange SD: ' + Math.round(orangeStdDev) + ' ms';
+        errorsElementOrange.textContent = 'Orange Errors:' + errorsOrange;
     }
 
     function setStimulusColor(newColor) {
         ctx.fillStyle = newColor;
+        stimulusColor = newColor;
     }
 
     function startTestTrial() {
+        clearTimeout(newTrialTimeout);
         if(trialsCounter < 31){
             trialsCounter++;
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -128,53 +168,66 @@
         }
         stopExperiment();
     }
-    function drawRectangle(x, y){
+    function drawRectangle(x, y, width){
+        let xMax = ctx.canvas.width-width
+        let yMax = ctx.canvas.height-width
 
-        squareWidth = 100 + (Math.random() * ((200) + 1));
+        let actualX = Math.min(x, xMax);
+        let actualY = Math.min(y, yMax)
         //squareWidth = Math.random()*300;
-        ctx.fillRect(x, y, squareWidth, squareWidth);
+        ctx.fillRect(actualX, actualY, width, width);
         stimulusShape = "square";
     }
 
-    function drawTriangle(x, y){
+    function drawTriangle(x, y, width){
         stimulusShape = "triangle";
+        let xMax = ctx.canvas.width-width
+        let yMax = ctx.canvas.height-width
 
-        triangleWidth = 100 + (Math.random() * ((200) + 1));
+        let actualX = Math.min(x, xMax);
+        let actualY = Math.min(y, yMax)
+
         ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(x+triangleWidth, y);
-        ctx.lineTo(x+triangleWidth/2, y+triangleWidth);
+        ctx.moveTo(actualX, actualY);
+        ctx.lineTo(actualX+width, actualY);
+        ctx.lineTo(actualX+width/2, actualY+width);
         ctx.closePath();
         ctx.fill();
-        setTimeout(startTestTrial, 6000);
+
     }
 
     function showStimulus() {
         stimulusx = Math.floor((Math.random() * ctx.canvas.width));
         stimulusy = Math.floor((Math.random() * ctx.canvas.height));
+        stimuluswidth = 100 + (Math.random() * ((200) + 1));
 
-        colorDecider = Math.random()*10
+        let colorDecider = Math.random()*10
         if(colorDecider < 5){
             setStimulusColor('purple')
         } else {
             setStimulusColor('orange')
         }
-
         let shapeDecider = Math.random()*10
-
-        if(shapeDecider < 5){
-            drawRectangle(stimulusx, stimulusy)
+        if (shapeDecider < 5) {
+            drawRectangle(stimulusx, stimulusy, stimuluswidth)
         } else {
-            drawTriangle(stimulusx, stimulusy)
+            drawTriangle(stimulusx, stimulusy, stimuluswidth);
+            newTrialTimeout = setTimeout(startTestTrial, 6000);
         }
         stimulusIsVisible = true;
         stimulusTimestamp = Date.now();
     }
 
     function recordStimulusReactionTime() {
+
         let deltaTime = Date.now() - stimulusTimestamp;
         times.push(deltaTime);
         timeElement.textContent = deltaTime + ' ms';
+        if(stimulusColor==="purple"){
+            purpleTimes.push(deltaTime);
+        } else {
+            orangeTimes.push(deltaTime);
+        }
     }
 
     function startExperiment() {
@@ -183,6 +236,11 @@
 
         // reset data and start tests
         times = [];
+        purpleTimes=[];
+        orangeTimes=[];
+        errorsTotal=0;
+        errorsOrange=0;
+        errorsPurple=0;
         experimentActive = true;
         trialsCounter++;
         startTestTrial();
@@ -190,12 +248,14 @@
 
     function stopExperiment() {
         // cancel any ongoing tests
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         clearTimeout(testStimulusTimeout);
         stimulusIsVisible = false;
         experimentActive = false;
 
         // reset instruction and show results
-        instruction.textContent = 'Press space to start!';
+
+        instructionElement.textContent = 'Here are your results! Press space to start again!';
         showResults();
     }
 
@@ -213,8 +273,12 @@
                 // start next trial
                 startTestTrial();
             } else if(stimulusIsVisible && stimulusShape ==="triangle"){
-                errors++;
-
+                errorsTotal++;
+                if(stimulusColor === "purple"){
+                    //errorsPurple++;
+                } else {
+                    //errorsOrange++;
+                }
             }
         } else if (event.key === 'a') {
             if (experimentActive ) {
