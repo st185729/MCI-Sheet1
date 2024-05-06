@@ -15,6 +15,8 @@
         }
         canvas {
             background-color: transparent;
+            margin: 0;
+            overflow: hidden;
             display: block;
             position: absolute;
             top: 0;
@@ -47,6 +49,11 @@
 <canvas id="myCanvas"></canvas>
 
 <script>
+    const observer = new ResizeObserver(() => {
+        ctx.canvas.width = ctx.canvas.clientWidth;
+        ctx.canvas.height = ctx.canvas.clientHeight;
+    });
+
 
     // if true, the experiment is currently active
     let experimentActive = false;
@@ -162,6 +169,7 @@
 
     function startTestTrial() {
         clearTimeout(newTrialTimeout);
+        observer.observe(ctx.canvas)
         if(trialsCounter < 31){
             trialsCounter++;
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -262,7 +270,7 @@
         experimentActive = false;
 
         // reset instruction and show results
-        instructionElement.textContent = 'Press space to start!';
+        instructionElement.textContent = 'Here are your results! Press space to start again!';
         showResults();
     }
 
