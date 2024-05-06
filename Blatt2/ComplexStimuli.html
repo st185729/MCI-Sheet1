@@ -5,8 +5,11 @@
 body {
     font-family: sans-serif;
 }
-#stimulus {
-    height: 40px;
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
 }
         </style>
     </head>
@@ -18,16 +21,11 @@ body {
         <p id="count"></p>
         <p id="mean"></p>
         <p id="sd"></p>
+        <img src="https://tse2.mm.bing.net/th?id=OIP.v98x5RQFq1Y5D43HVPBrBQHaEf&pid=Api", width = "600", class = "center">
 
         <script>
 
-/* Links der Bilder:
-* https://mystischereisen.de/europa/deutsche-kuche
-*https://berlinpoche.de/typische-deutsche-gerichte
-*http://fity.club/lists/suggestions/currywurst/
-*https://www.chefskarte.de/beliebtesten-chinesischen-gerichte/
-*https://mystischereisen.de/amerika/mexikanisches-essen
-*/
+
 // if true, the experiment is currently active
 let experimentActive = false;
 
@@ -44,38 +42,36 @@ let testStimulusTimeout;
 // recorded reaction times in milliseconds
 let times = [];
 
-const images = [{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Konigsberger-Klopse.jpg"},
-{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Wurste.jpg" },
-{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Maultaschen.jpg" },
-{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Schnitzel.jpg" },
-{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Schwarzwalder-Kirschtorte.jpg" },
-{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Spargel.jpg" },
-{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Brezel.jpg" },
-{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Kartoffelknodel.jpg" },
-{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Kartoffelsalat.jpg" },
-{ID: "D",image: "https://mystischereisen.de/wp-content/uploads/2022/03/Sauerbraten.jpg" },
-
+const pictures = [{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Konigsberger-Klopse.jpg"},
+{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Wurste.jpg" },
+{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Maultaschen.jpg" },
+{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Schnitzel.jpg" },
+{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Schwarzwalder-Kirschtorte.jpg" },
+{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Spargel.jpg" },
+{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Brezel.jpg" },
+{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Kartoffelknodel.jpg" },
+{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Kartoffelsalat.jpg" },
+{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Sauerbraten.jpg" },
 {ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Pekingente-1.jpg"},
-{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Schweinefleisch-s%C3%BC%C3%9Fsauer-1.jpg" },
-{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Mapo-Tofu-4.jpg" },
-{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Gegrillter-Spie%C3%9F-1.jpg" },
-{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/dumplings-4.jpg" },
-{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/hot-pot-1-1.jpg" },
-{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Gong-bao-Huhn-1.jpg" },
-{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/bubble-tea-1-1.jpg" },
-{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Lamian-Nudeln-1.jpg" },
-{ID: "C",image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Gebratene-Eier-und-Tomaten-1.jpg"},
-
+{ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Schweinefleisch-s%C3%BC%C3%9Fsauer-1.jpg" },
+{ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Mapo-Tofu-4.jpg" },
+{ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Gegrillter-Spie%C3%9F-1.jpg" },
+{ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/dumplings-4.jpg" },
+{ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/hot-pot-1-1.jpg" },
+{ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Gong-bao-Huhn-1.jpg" },
+{ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/bubble-tea-1-1.jpg" },
+{ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Lamian-Nudeln-1.jpg" }, //kommt zweimal vor!
+{ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Gebratene-Eier-und-Tomaten-1.jpg"},
 {ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Klassische-Guacamole.jpg"},
-{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Siebenschichtiger-Taco-Dip.jpg"},
-{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Chilaquiles.jpg" },
-{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Tamales.jpg" },
-{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Tacos.jpg" },
-{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Pozole.jpg" },
-{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Enchiladas.jpg" },
-{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Fajita-1.jpg" },
-{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Quesadilla.jpg" },
-{ID: "M",image: "https://mystischereisen.de/wp-content/uploads/2019/04/Elote.jpg" }]
+{ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Siebenschichtiger-Taco-Dip.jpg"},
+{ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Chilaquiles.jpg" },
+{ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Tamales.jpg" },
+{ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Tacos.jpg" },
+{ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Pozole.jpg" },
+{ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Enchiladas.jpg" },
+{ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Fajita-1.jpg" },
+{ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Quesadilla.jpg" },
+{ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Elote.jpg" }]
 
 
 // DOM elements
@@ -90,11 +86,11 @@ let shuffle = [];
 function getShuffledImages(){
     for(let i=0; i < 30; i++){
         number = Math.floor(Math.random() * 31);
-        while(images[number] in shuffle){
-            number = Math.floor(Math.random() * 31);
+        while(shuffle.includes(pictures[number])|| pictures[number]==undefined){
+           number = Math.floor(Math.random() * 31);
         }
-        shuffle.push(images[number]);
-    }
+        shuffle.push(pictures[number]);
+    }    
 }
 
 function getMean(data) {
@@ -128,26 +124,26 @@ function showResults() {
 
 let index = 0;
 function startTestTrial() {
-    console.log(index);
     if(index < shuffle.length){
-        let imageElement = document.createElement('picture');
-        imageElement.src = shuffle[index].image;
-        stimulusElement.appendChild(imageElement);
+        showStimulus()
         index++;
         stimulusIsVisible = true;
         stimulusTimestamp = Date.now();
 
     }
     else{
-        console.log("Ausgabe Ergebnisse")
+        stopExperiment()
     }
 
 }
 
 function showStimulus() {
-    setStimulusColor('red');
-    stimulusIsVisible = true;
-    stimulusTimestamp = Date.now();
+    let imageElement = document.images[0];
+    let newImage = new Image();
+    newImage.onload = function(){
+            imageElement.src = this.src;   
+        };
+        newImage.src = (shuffle[index]).image;
 }
 
 function recordStimulusReactionTime() {
@@ -193,11 +189,7 @@ window.addEventListener('keydown', (event) => {
             // start next trial
             startTestTrial();
         }
-    } else if (index == 30) {
-        if (experimentActive) {
-            // stop the experiment and show results
-            stopExperiment();
-        }
+        
     }  
 });
       </script>
