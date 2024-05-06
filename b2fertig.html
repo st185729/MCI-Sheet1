@@ -4,17 +4,19 @@
     <style>
         body {
             font-family: sans-serif;
+            background-color: transparent;
+            z-index: 1;
             display: block;
             position: absolute;
-            z-index: 1;
             left: 0;
             top: 0;
             width:100%;
             height:100%;
-            background-color: white;
         }
         canvas {
             background-color: transparent;
+            margin: 0;
+            overflow: hidden;
             display: block;
             position: absolute;
             top: 0;
@@ -34,11 +36,24 @@
 <p id="count"></p>
 <p id="mean"></p>
 <p id="sd"></p>
-<p id="errors"></p>
+<p id="errorsTotal"></p>
+<p id="errorsPurple"></p>
+<p id="errorsOrange"></p>
+<p id="purplemean"></p>
+<p id="purplesd"></p>
+<p id="purpleerrors"></p>
+<p id="orangemean"></p>
+<p id="orangesd"></p>
+<p id="orangeerrors"></p>
 
 <canvas id="myCanvas"></canvas>
 
 <script>
+    const observer = new ResizeObserver(() => {
+        ctx.canvas.width = ctx.canvas.clientWidth;
+        ctx.canvas.height = ctx.canvas.clientHeight;
+    });
+
 
     // if true, the experiment is currently active
     let experimentActive = false;
@@ -68,10 +83,10 @@
     //calculated elements
     let meanElement = document.getElementById('mean');
     let stdDevElement = document.getElementById('sd');
-    let meanElementPurple = document.getElementById('mean');
-    let stdDevElementPurple = document.getElementById('sd');
-    let meanElementOrange = document.getElementById('mean');
-    let stdDevElementOrange = document.getElementById('sd');
+    let meanElementPurple = document.getElementById('purplemean');
+    let stdDevElementPurple = document.getElementById('purplesd');
+    let meanElementOrange = document.getElementById('orangemean');
+    let stdDevElementOrange = document.getElementById('orangesd');
 
     let instructionElement = document.getElementById('instruction');
 
@@ -89,7 +104,7 @@
     let stimulusx = 0;
     let stimulusy = 0;
     let stimulusColor = '';
-    let stimuluswidth = 0;
+    let stimuliswidth = 0;
     let stimulusShape = 0;
 
     //canvas properties
@@ -140,11 +155,11 @@
 
         meanElementPurple.textContent = 'Purple Mean: ' + Math.round(meanPurpleTime) + ' ms';
         stdDevElementPurple.textContent = 'Purple SD: ' + Math.round(purpleStdDev) + ' ms';
-        errorsElementPurple.textContent = 'Purple Errors:' + errorsPurple;
+        errorsElementPurple.textContent = 'Purple Errors: ' + errorsPurple;
 
         meanElementOrange.textContent = 'Orange Mean: ' + Math.round(meanOrangeTimes) + ' ms';
         stdDevElementOrange.textContent = 'Orange SD: ' + Math.round(orangeStdDev) + ' ms';
-        errorsElementOrange.textContent = 'Orange Errors:' + errorsOrange;
+        errorsElementOrange.textContent = 'Orange Errors: ' + errorsOrange;
     }
 
     function setStimulusColor(newColor) {
@@ -154,6 +169,7 @@
 
     function startTestTrial() {
         clearTimeout(newTrialTimeout);
+        observer.observe(ctx.canvas)
         if(trialsCounter < 31){
             trialsCounter++;
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -199,9 +215,9 @@
     function showStimulus() {
         stimulusx = Math.floor((Math.random() * ctx.canvas.width));
         stimulusy = Math.floor((Math.random() * ctx.canvas.height));
-        stimuluswidth = 100 + (Math.random() * ((200) + 1));
+        stimuliswidth = 100 + (Math.random() * ((200) + 1));
 
-        let colorDecider = Math.random()*10
+        let colorDecider = Math.random() * 10
         if(colorDecider < 5){
             setStimulusColor('purple')
         } else {
@@ -209,9 +225,9 @@
         }
         let shapeDecider = Math.random()*10
         if (shapeDecider < 5) {
-            drawRectangle(stimulusx, stimulusy, stimuluswidth)
+            drawRectangle(stimulusx, stimulusy, stimuliswidth)
         } else {
-            drawTriangle(stimulusx, stimulusy, stimuluswidth);
+            drawTriangle(stimulusx, stimulusy, stimuliswidth);
             newTrialTimeout = setTimeout(startTestTrial, 6000);
         }
         stimulusIsVisible = true;
@@ -254,7 +270,6 @@
         experimentActive = false;
 
         // reset instruction and show results
-
         instructionElement.textContent = 'Here are your results! Press space to start again!';
         showResults();
     }
@@ -275,10 +290,14 @@
             } else if(stimulusIsVisible && stimulusShape ==="triangle"){
                 errorsTotal++;
                 if(stimulusColor === "purple"){
-                    //errorsPurple++;
+                    errorsPurple++;
                 } else {
-                    //errorsOrange++;
+                    errorsOrange++;
                 }
+            } else if(experimentActive && !stimulusIsVisible){
+                errorsTotal++;
+                errorsOrange++;
+                errorsPurple++;
             }
         } else if (event.key === 'a') {
             if (experimentActive ) {
