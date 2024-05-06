@@ -21,6 +21,9 @@ body {
         <p id="count"></p>
         <p id="mean"></p>
         <p id="sd"></p>
+        <p id="errorC"></p>
+        <p id="errorD"></p>
+        <p id="errorM"></p>
         <img src="https://tse2.mm.bing.net/th?id=OIP.v98x5RQFq1Y5D43HVPBrBQHaEf&pid=Api", width = "600", class = "center">
 
         <script>
@@ -60,7 +63,7 @@ const pictures = [{ID: "D", image: "https://mystischereisen.de/wp-content/upload
 {ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/hot-pot-1-1.jpg" },
 {ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Gong-bao-Huhn-1.jpg" },
 {ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/bubble-tea-1-1.jpg" },
-{ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Lamian-Nudeln-1.jpg" }, //kommt zweimal vor!
+{ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Lamian-Nudeln-1.jpg" },
 {ID: "C", image: "https://www.tourcompass.de/wp-content/uploads/2022/12/Gebratene-Eier-und-Tomaten-1.jpg"},
 {ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Klassische-Guacamole.jpg"},
 {ID: "M", image: "https://mystischereisen.de/wp-content/uploads/2019/04/Siebenschichtiger-Taco-Dip.jpg"},
@@ -79,7 +82,10 @@ let timeElement = document.getElementById('time');
 let meanElement = document.getElementById('mean');
 let stdDevElement = document.getElementById('sd');
 let instructionElement = document.getElementById('instruction');
-let stimulusElement = document.getElementById('stimulus');
+let errorCElement = document.getElementById("errorC");
+let errorDElement = document.getElementById("errorD");
+let errorMElement = document.getElementById("errorM");
+
 
 let shuffle = [];
 
@@ -111,6 +117,9 @@ function clearResults() {
     timeElement.textContent = '';
     meanElement.textContent = '';
     stdDevElement.textContent = '';
+    errorCElement.textContent = '';
+    errorDElement.textContent = '';
+    errorMElement.textContent = '';
 }
 
 function showResults() {
@@ -119,6 +128,9 @@ function showResults() {
 
     meanElement.textContent = 'Mean: ' + Math.round(meanDeltaTime) + ' ms';
     stdDevElement.textContent = 'SD: ' + Math.round(stdDev) + ' ms';
+    errorCElement.textContent = 'wrong Chinese dishes: ' + chineseErrors;
+    errorDElement.textContent = 'wrong German dishes: ' + germanErrors;
+    errorMElement.textContent = 'wrong Mexican dishes: ' + mexicanErrors;
 }
 
 
@@ -126,15 +138,12 @@ let index = 0;
 function startTestTrial() {
     if(index < shuffle.length){
         showStimulus()
-        index++;
         stimulusIsVisible = true;
         stimulusTimestamp = Date.now();
-
     }
     else{
         stopExperiment()
     }
-
 }
 
 function showStimulus() {
@@ -154,12 +163,15 @@ function recordStimulusReactionTime() {
 
 function startExperiment() {
     clearResults(); // clear results of any previous tests
-    instructionElement.textContent = "Press space when the color changes! Press 'a' for results!";
+    instructionElement.textContent = "Press 'd' for an German dish, 'f' for an Chinese dish and 'g' for an Mexican dish";
     getShuffledImages();
     // reset data and start tests
     times = [];
     experimentActive = true;
     index = 0;
+    chineseErrors = 0;
+    germanErrors = 0;
+    mexicanErrors = 0;
     startTestTrial();
 }
 
@@ -174,6 +186,10 @@ function stopExperiment() {
     showResults();
 }
 
+
+let chineseErrors = 0;
+let germanErrors = 0;
+let mexicanErrors = 0;
 window.addEventListener('keydown', (event) => {
     if (event.key === ' ') {
         // the user pressed the space key
@@ -182,15 +198,27 @@ window.addEventListener('keydown', (event) => {
             startExperiment();
             return;
         }
+    }
+    else if((event.key == "d"||event.key == "f"||event.key == "g") && stimulusIsVisible){
+        recordStimulusReactionTime();
 
-        if (stimulusIsVisible) {
-            // record reaction time
-            recordStimulusReactionTime();
-            // start next trial
-            startTestTrial();
+        if(event.key === "d" && (shuffle[index]).ID != "D"){ //dish isn´t german, but german was clicked
+            germanErrors++;
+            }
+        else if(event.key === "f" && (shuffle[index]).ID != "C"){
+            chineseErrors++;
         }
-        
+        else if(event.key === "g" && (shuffle[index]).ID != "M"){
+            mexicanErrors++;
+            }
+        index++;
+        startTestTrial();        
+    }
+   
+    else if(event.key=="a"){
+        stoppExperiment();
     }  
+      
 });
       </script>
    </body>
