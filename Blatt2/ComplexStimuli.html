@@ -14,13 +14,17 @@ body {
         </style>
     </head>
    <body>
-        <h1 id="title">User Study</h1>
+        <h1 id="title">User Study 3</h1>
         <h2 id="instruction">Press space to start!</h2>
-        <div id="stimulus"></div>
         <p id="time"></p>
-        <p id="count"></p>
         <p id="mean"></p>
+        <p id="meanD"></p>
+        <p id="meanC"></p>
+        <p id="meanM"></p>
         <p id="sd"></p>
+        <p id="sdD"></p>
+        <p id="sdC"></p>
+        <p id="sdM"></p>
         <p id="errorC"></p>
         <p id="errorD"></p>
         <p id="errorM"></p>
@@ -43,8 +47,12 @@ let stimulusTimestamp;
 let testStimulusTimeout;
 
 // recorded reaction times in milliseconds
-let times = [];
+let times = []; //noch times elemente erstellen
+let timeD =[];
+let timeC = [];
+let timeM = [];
 
+// the images for the stimulus
 const pictures = [{ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Konigsberger-Klopse.jpg"},
 {ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Wurste.jpg" },
 {ID: "D", image: "https://mystischereisen.de/wp-content/uploads/2022/03/Maultaschen.jpg" },
@@ -80,7 +88,13 @@ const pictures = [{ID: "D", image: "https://mystischereisen.de/wp-content/upload
 // DOM elements
 let timeElement = document.getElementById('time');
 let meanElement = document.getElementById('mean');
+let meanDElement = document.getElementById('meanD');
+let meanCElement = document.getElementById('meanC');
+let meanMElement = document.getElementById('meanM');
 let stdDevElement = document.getElementById('sd');
+let stdDevDElement = document.getElementById('sdD');
+let stdDevCElement = document.getElementById('sdC');
+let stdDevMElement = document.getElementById('sdM');
 let instructionElement = document.getElementById('instruction');
 let errorCElement = document.getElementById("errorC");
 let errorDElement = document.getElementById("errorD");
@@ -114,22 +128,41 @@ function getStandardDeviation(data) {
 
 
 function clearResults() {
-    timeElement.textContent = '';
     meanElement.textContent = '';
     stdDevElement.textContent = '';
-    errorCElement.textContent = '';
-    errorDElement.textContent = '';
+    meanDElement.textContent = ''
+    stdDevDElement.textContent = '';
+    errorDElement.textContent = ''
+    meanCElement.textContent = '';
+    stdDevCElement.textContent = '';
+    errorCElement.textContent = ''
+    meanMElement.textContent = '';
+    stdDevMElement.textContent = '';
     errorMElement.textContent = '';
 }
 
 function showResults() {
     let meanDeltaTime = getMean(times);
     let stdDev = getStandardDeviation(times);
+    let meanGerman = getMean(timeD);
+    let meanChinese = getMean(timeC);
+    let meanMexican = getMean(timeM);
+    let stdDevD = getStandardDeviation(timeD);
+    let stdDevC = getStandardDeviation(timeC);
+    let stdDevM = getStandardDeviation(timeM);
 
-    meanElement.textContent = 'Mean: ' + Math.round(meanDeltaTime) + ' ms';
-    stdDevElement.textContent = 'SD: ' + Math.round(stdDev) + ' ms';
-    errorCElement.textContent = 'wrong Chinese dishes: ' + chineseErrors;
+    
+
+    meanElement.textContent = 'Mean in total: ' + Math.round(meanDeltaTime) + ' ms';
+    stdDevElement.textContent = 'SD in total: ' + Math.round(stdDev) + ' ms';
+    meanDElement.textContent = 'Mean for German dishes: ' + Math.round(meanGerman) + 'ms'
+    stdDevDElement.textContent = 'SD for German dishes: '+ Math.round(stdDevD) + ' ms';
     errorDElement.textContent = 'wrong German dishes: ' + germanErrors;
+    meanCElement.textContent = 'Mean for Chinese dishes: '+ Math.round(meanChinese) + ' ms';
+    stdDevCElement.textContent = 'SD for Chinese dishes: '+ Math.round(stdDevC) + ' ms';
+    errorCElement.textContent = 'wrong Chinese dishes: ' + chineseErrors;
+    meanMElement.textContent = 'Mean for Mexican dishes: '+ Math.round(meanMexican) + ' ms';
+    stdDevMElement.textContent = 'SD for Mexican dishes: '+ Math.round(stdDevM) + ' ms';
     errorMElement.textContent = 'wrong Mexican dishes: ' + mexicanErrors;
 }
 
@@ -158,7 +191,15 @@ function showStimulus() {
 function recordStimulusReactionTime() {
     let deltaTime = Date.now() - stimulusTimestamp;
     times.push(deltaTime);
-    timeElement.textContent = deltaTime + ' ms';
+    timeElement.textContent = deltaTime + ' ms'; //switch case
+    switch((shuffle[index]).ID){
+        case "D": timeD.push(deltaTime);
+                    break;
+        case "C": timeC.push(deltaTime);
+                    break;
+        case "M": timeM.push(deltaTime);
+                    break;  
+    }
 }
 
 function startExperiment() {
@@ -216,7 +257,7 @@ window.addEventListener('keydown', (event) => {
     }
    
     else if(event.key=="a"){
-        stoppExperiment();
+        stopExperiment();
     }  
       
 });
