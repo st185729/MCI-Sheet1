@@ -148,7 +148,7 @@
         let purpleStdDev = getStandardDeviation(purpleTimes);
         let orangeStdDev = getStandardDeviation(orangeTimes);
 
-        countElement.textContent = 'Count: ' + times.length;
+        countElement.textContent = 'Count: ' + trialsCounter;
         meanElement.textContent = 'Total Mean: ' + Math.round(meanDeltaTime) + ' ms';
         stdDevElement.textContent = 'Total SD: ' + Math.round(stdDev) + ' ms';
         errorsElementTotal.textContent = 'Total Errors:' + errorsTotal;
@@ -170,19 +170,15 @@
     function startTestTrial() {
         clearTimeout(newTrialTimeout);
         observer.observe(ctx.canvas)
-        if(trialsCounter < 31){
-            trialsCounter++;
-            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            stimulusIsVisible = false;
-            isSquare = false;
+        trialsCounter++;
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        stimulusIsVisible = false;
+        isSquare = false;
 
-            // schedule the stimulus to appear after a random amount of time
-            let timeToWaitInSeconds = Math.random() * 4 + 2; // 2 - 6s
-            testStimulusTimeout = setTimeout(showStimulus, timeToWaitInSeconds * 1000);
-            //showStimulus();
-            return;
-        }
-        stopExperiment();
+        // schedule the stimulus to appear after a random amount of time
+        let timeToWaitInSeconds = Math.random() * 4 + 2; // 2 - 6s
+        testStimulusTimeout = setTimeout(showStimulus, timeToWaitInSeconds * 1000);
+            
     }
     function drawRectangle(x, y, width){
         let xMax = ctx.canvas.width-width
@@ -216,6 +212,7 @@
         stimulusx = Math.floor((Math.random() * ctx.canvas.width));
         stimulusy = Math.floor((Math.random() * ctx.canvas.height));
         stimuliswidth = 100 + (Math.random() * ((200) + 1));
+        let timeToWaitInSeconds = Math.random() * 4 + 2; // 2 - 6s
 
         let colorDecider = Math.random() * 10
         if(colorDecider < 5){
@@ -228,7 +225,7 @@
             drawRectangle(stimulusx, stimulusy, stimuliswidth)
         } else {
             drawTriangle(stimulusx, stimulusy, stimuliswidth);
-            newTrialTimeout = setTimeout(startTestTrial, 6000);
+            newTrialTimeout = setTimeout(startTestTrial, timeToWaitInSeconds*1000);
         }
         stimulusIsVisible = true;
         stimulusTimestamp = Date.now();
@@ -258,7 +255,6 @@
         errorsOrange=0;
         errorsPurple=0;
         experimentActive = true;
-        trialsCounter++;
         startTestTrial();
     }
 
@@ -299,13 +295,12 @@
                 errorsOrange++;
                 errorsPurple++;
             }
-        } else if (event.key === 'a') {
-            if (experimentActive ) {
-                // stop the experiment and show results
-                stopExperiment();
-            }
+
         }  else if (event.key === 's' && stimulusShape==="triangle") {
             startTestTrial();
+        }
+        if(trialsCounter == 30){
+            stopExperiment();
         }
     });
 </script>

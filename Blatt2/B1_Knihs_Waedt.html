@@ -44,7 +44,7 @@ let testStimulusTimeout;
 
 // recorded reaction times in milliseconds
 let times = [];
-let colours =["rgb(255, 255, 255)","rgb(242, 242, 255)","rgb(230, 230, 255)", "rgb(204, 204, 255)","rgb(191, 191, 255)","rgb(178, 178, 255)","rgb(166, 166, 255)","rgb(153, 153, 255)"];
+let colors =["rgb(255, 255, 255)","rgb(242, 242, 255)","rgb(230, 230, 255)", "rgb(204, 204, 255)","rgb(191, 191, 255)","rgb(178, 178, 255)","rgb(166, 166, 255)","rgb(153, 153, 255)"];
 let countedErrors =0;
 
 // DOM elements
@@ -147,14 +147,14 @@ function showStimulus() {
 let interval = 0;
 function fadeIn() //Farben einblenden
 		{
-			interval=setInterval(swapColour,200);
+			interval=setInterval(swapColor,200);
 		}
 
-function swapColour() {
+function swapColor() {
     opacity = window.getComputedStyle(box).getPropertyValue("background-color");
-    index = colours.indexOf(opacity);
-    if(index < colours.length-1 && stimulusIsVisible==true){
-        box.style.backgroundColor =colours[index+1];
+    index = colors.indexOf(opacity);
+    if(index < colors.length-1 && stimulusIsVisible==true){
+        box.style.backgroundColor =colors[index+1];
     }
     else {
         clearInterval(interval);
@@ -226,7 +226,6 @@ window.addEventListener('keydown', (event) => {
     if(times.length == 30){
         if (experimentActive) {
             // stop the experiment and show results
-            box.style.bottom;
             stopExperiment();
         } 
     }
