@@ -93,7 +93,9 @@ function getCorrelation(){
     for(let i =0; i < times.length; i++){
         sum = sum + ((times[i]-meanTimes)*(normsXY[i]-meanNorm)); //Summe für Korrelation
     }
-    return sum / (times.length); //Korrelation
+    let stdDevNorm = getStandardDeviation(normsXY);
+    let stdDevTime = getStandardDeviation(times);
+    return sum / (times.length * stdDevNorm * stdDevTime); //Korrelation
 }
 
 

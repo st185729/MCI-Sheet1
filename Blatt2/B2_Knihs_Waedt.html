@@ -262,6 +262,7 @@
         // cancel any ongoing tests
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         clearTimeout(testStimulusTimeout);
+        clearTimeout(newTrialTimeout);
         stimulusIsVisible = false;
         experimentActive = false;
 
