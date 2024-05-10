@@ -117,7 +117,7 @@ function showResults() {
     meanElement.textContent = 'Mean: ' + Math.round(meanDeltaTime) + ' ms';
     stdDevElement.textContent = 'SD: ' + Math.round(stdDev) + ' ms';
     errorElement.textContent = 'Errors: ' + Math.round(countedErrors);
-    cor.textContent = 'Correlation:' + Math.round(correlation);
+    cor.textContent = 'Correlation: ' + Math.round((correlation + Number.EPSILON) * 100) / 100;
     
 }
 
