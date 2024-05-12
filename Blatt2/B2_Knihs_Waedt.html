@@ -98,7 +98,7 @@
     let errorsPurple = 0;
     let errorsElementOrange = document.getElementById('errorsOrange');
     let errorsOrange = 0;
-    let trialsCounter = 0;
+  
 
     //stimulus properties
     let stimulusx = 0;
@@ -148,7 +148,7 @@
         let purpleStdDev = getStandardDeviation(purpleTimes);
         let orangeStdDev = getStandardDeviation(orangeTimes);
 
-        countElement.textContent = 'Count: ' + trialsCounter;
+        countElement.textContent = 'Count: ' + times.length;
         meanElement.textContent = 'Total Mean: ' + Math.round(meanDeltaTime) + ' ms';
         stdDevElement.textContent = 'Total SD: ' + Math.round(stdDev) + ' ms';
         errorsElementTotal.textContent = 'Total Errors:' + errorsTotal;
@@ -169,8 +169,7 @@
 
     function startTestTrial() {
         clearTimeout(newTrialTimeout);
-        observer.observe(ctx.canvas)
-        trialsCounter++;
+        observer.observe(ctx.canvas);
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         stimulusIsVisible = false;
         isSquare = false;
@@ -181,11 +180,11 @@
             
     }
     function drawRectangle(x, y, width){
-        let xMax = ctx.canvas.width-width
-        let yMax = ctx.canvas.height-width
+        let xMax = ctx.canvas.width-width;
+        let yMax = ctx.canvas.height-width;
 
         let actualX = Math.min(x, xMax);
-        let actualY = Math.min(y, yMax)
+        let actualY = Math.min(y, yMax);
         //squareWidth = Math.random()*300;
         ctx.fillRect(actualX, actualY, width, width);
         stimulusShape = "square";
@@ -300,7 +299,7 @@
         }  else if (event.key === 's' && stimulusShape==="triangle") {
             startTestTrial();
         }
-        if(trialsCounter == 30){
+        if(times.length == 30){
             stopExperiment();
         }
     });
